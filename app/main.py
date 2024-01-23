@@ -5,11 +5,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import numpy as np 
 
-main_directory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-
 def get_clean_data():
-    data_directory = os.path.join(main_directory, 'data')   
-    # data = pd.read_csv(f"{data_directory}/data.csv")
     data = pd.read_csv(f"data/data.csv")
     data = data.drop(['Unnamed: 32', 'id'], axis=1)
     data['diagnosis'] = data['diagnosis'].map({'M': 1, 'B': 0})
@@ -149,10 +145,6 @@ def get_radar_chart(input_data):
     return fig
 
 def add_predictions(input_data):
-    model_directory = os.path.join(main_directory, 'model')   
-
-    # model = pickle.load(open(f"{model_directory}/model.pkl", "rb"))
-    # scaler = pickle.load(open(f"{model_directory}/scaler.pkl", "rb"))
     model = pickle.load(open(f"model/model.pkl", "rb"))
     scaler = pickle.load(open(f"model/scaler.pkl", "rb"))
 
@@ -165,9 +157,9 @@ def add_predictions(input_data):
     st.write("The cell cluster is: ")
 
     if prediction[0] == 0:
-        st.write("<span style='{color: #fff;padding: 0.2em 0.5em; border-radius: 0.5em; background-color: #01DB4B;}'>Benign</span>", unsafe_allow_html=True)
+        st.write("<span class='diagnosis benign'>Benign</span>", unsafe_allow_html=True)
     else:
-        st.write("<span style='{color: #fff;padding: 0.2em 0.5em; border-radius: 0.5em; background-color: #01DB4B;}'>Malicious</span>", unsafe_allow_html=True)
+        st.write("<span class='diagnosis malicious'>Malignant</span>", unsafe_allow_html=True)
 
     st.write("Probability of being benign: ", model.predict_proba(input_array_scaled)[0][0])
     st.write("Probability of being malignant: ", model.predict_proba(input_array_scaled)[0][1])
@@ -179,6 +171,9 @@ def main():
         page_icon='👩‍⚕️',
         layout='wide', 
         initial_sidebar_state='expanded')
+
+    with open("assets/style.css", 'rb') as f:
+        st.markdown("<style>{}</style>".format(f.read()), unsafe_allow_html=True)
 
     input_data = add_sidebar()
 

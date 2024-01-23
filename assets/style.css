@@ -1,4 +1,14 @@
-  
+.st-emotion-cache-13wsfa3 {
+  width: 100.805px;
+  position: relative;
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #7E99AB;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
   .diagnosis {
     color: #fff;
     padding: 0.2em 0.5em;

@@ -9,7 +9,8 @@ main_directory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 
 def get_clean_data():
     data_directory = os.path.join(main_directory, 'data')   
-    data = pd.read_csv(f"{data_directory}/data.csv")
+    # data = pd.read_csv(f"{data_directory}/data.csv")
+    data = pd.read_csv(f"data/data.csv")
     data = data.drop(['Unnamed: 32', 'id'], axis=1)
     data['diagnosis'] = data['diagnosis'].map({'M': 1, 'B': 0})
     return data
@@ -150,8 +151,10 @@ def get_radar_chart(input_data):
 def add_predictions(input_data):
     model_directory = os.path.join(main_directory, 'model')   
 
-    model = pickle.load(open(f"{model_directory}/model.pkl", "rb"))
-    scaler = pickle.load(open(f"{model_directory}/scaler.pkl", "rb"))
+    # model = pickle.load(open(f"{model_directory}/model.pkl", "rb"))
+    # scaler = pickle.load(open(f"{model_directory}/scaler.pkl", "rb"))
+    model = pickle.load(open(f"model/model.pkl", "rb"))
+    scaler = pickle.load(open(f"model/scaler.pkl", "rb"))
 
     input_array = np.array(list(input_data.values())).reshape(1, -1)
     input_array_scaled = scaler.transform(input_array)
